@@ -1,7 +1,9 @@
-configs = {}
+config = {}
 
-configs.host = "http://127.0.0.1/blog"
+config.host = "http://127.0.0.1/blog"
 
-configs.name = "Lua Blog"
+config.uri_prefix = "/blog"
 
-return configs
+config.name = "Lua Blog"
+
+return config

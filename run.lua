@@ -18,9 +18,19 @@ end
 
 --装载配置--
 app_config = require("config")
-ngx.print(app_config.host)
+-- ngx.print(app_config.host)
+
+--获取请求的原始uri和请求方式--
+local request_method = ngx.var.request_method
+local request_uri 	 = ngx.var.request_uri
+
+--截取request_uri分析出连接中有用的部分--
+local uri_prefix_len = string.len(app_config.uri_prefix)
+--截取真实请求串--
+local real_request_uri = string.sub(request_uri, uri_prefix_len + 1)
+
+local functions = require("functions")
+local page, params = functions.seprate_uri(real_request_uri)
 
 
-
--- local request_method = ngx.var.request_method
--- ngx.print(request_method)
+-- ngx.print(real_request_uri)
