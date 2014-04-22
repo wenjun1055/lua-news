@@ -29,8 +29,25 @@ local uri_prefix_len = string.len(app_config.uri_prefix)
 --截取真实请求串--
 local real_request_uri = string.sub(request_uri, uri_prefix_len + 1)
 
+--加载functions--
 local functions = require("functions")
-local page, params = functions.seprate_uri(real_request_uri)
+--分解url得到详细的信息--
+local params = functions.seprate_uri(real_request_uri)
 
+--根据参数进行不同页面的渲染工作--
+if "article" == params["page"] then
+	--文章页面--
+else 
+	--首页--
+	if "program" == params["page"] then 
+		--栏目页面--
+	else
+		--首页--
+	end
+end
 
--- ngx.print(real_request_uri)
+for k, v in pairs(params) do
+	ngx.print(k,"\t",v,"\n")
+end 
+
+-- ngx.print(params)
