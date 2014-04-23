@@ -17,7 +17,7 @@ if not (package.cpath:find(app_path)) then
 end
 
 --装载配置--
-app_config = require("config")
+local app_config = require("config")
 -- ngx.print(app_config.host)
 
 --获取请求的原始uri和请求方式--
@@ -25,29 +25,40 @@ local request_method = ngx.var.request_method
 local request_uri 	 = ngx.var.request_uri
 
 --截取request_uri分析出连接中有用的部分--
-local uri_prefix_len = string.len(app_config.uri_prefix)
---截取真实请求串--
-local real_request_uri = string.sub(request_uri, uri_prefix_len + 1)
+local uri_prefix_len  = string.len(app_config.uri_prefix)
+local request_uri_len = string.len(request_uri)
 
---加载functions--
-local functions = require("functions")
---分解url得到详细的信息--
-local params = functions.seprate_uri(real_request_uri)
+local params = {
+		["program"] = "all", 
+		["page"]    = "program",
+		["pageno"]  = 1
+	}
+
+if request_uri_len > 5 then
+	--截取真实请求串--
+	local real_request_uri = string.sub(request_uri, uri_prefix_len + 1)
+
+	--加载functions--
+	local functions = require("functions")	
+
+	params = nil
+
+	params = functions.seprate_uri(real_request_uri)
+end
+
+--加载数据库类--
+local db = require("db")
 
 --根据参数进行不同页面的渲染工作--
 if "article" == params["page"] then
 	--文章页面--
 else 
-	--首页--
-	if "program" == params["page"] then 
-		--栏目页面--
-	else
-		--首页--
-	end
+	local news_list = db.get_news_list_by_program(params["program"], params["pageno"], app_config.page_size)
+	--TODO 渲染工作--
 end
 
-for k, v in pairs(params) do
-	ngx.print(k,"\t",v,"\n")
-end 
 
--- ngx.print(params)
+
+-- for k, v in pairs(params) do
+-- 	ngx.print(k,"\t",v,"\n")
+-- end 

@@ -6,4 +6,6 @@ config.uri_prefix = "/blog"
 
 config.name = "Lua Blog"
 
+config.page_size = 10
+
 return config
