@@ -52,13 +52,11 @@ local db = require("db")
 --根据参数进行不同页面的渲染工作--
 if "article" == params["page"] then
 	--文章页面--
+	local article_id = params["article_id"]
+	ngx.print(article_id)
+
 else 
 	local news_list = db.get_news_list_by_program(params["program"], params["pageno"], app_config.page_size)
 	--TODO 渲染工作--
+
 end
-
-
-
--- for k, v in pairs(params) do
--- 	ngx.print(k,"\t",v,"\n")
--- end 

@@ -41,7 +41,6 @@ function Db.get_news_list_by_program(program, page_no, page_size)
 	-- ngx.say(cjson.encode(res))
 	-- ngx.print(res[1]["title"])
 	return res
-
 end
 
 return Db

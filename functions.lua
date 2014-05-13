@@ -22,6 +22,7 @@ function Functions.seprate_uri(request_uri)
 	if 0 == string.len(request_uri) then
 		result["page"]    = "program"
 		result["program"] = "all"
+		result["pageno"]  = 1
 
 		return result
 	end
